@@ -1,0 +1,8 @@
+# multidex must
+-keep class com.coofee.splash.SplashActivity {
+    <init>();
+}
+
+# must keep contentProvider
+
+# must keep static broadcastReceiver

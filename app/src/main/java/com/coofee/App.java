@@ -8,7 +8,7 @@ import com.coofee.multidex.MultidexFix;
 /**
  * Created by zhaocongying on 16/8/1.
  */
-public class App extends Application implements AppInitialize {
+public class App extends Application {
 
     private static final String CLASS_APP_INITIALIZE = "com.coofee.AppInitializeImpl";
 
@@ -22,24 +22,23 @@ public class App extends Application implements AppInitialize {
 
         if (MultidexFix.isMultidexInstalled()) {
             MultidexFix.installed();
-            init(App.getInstance());
+            init();
         } else {
             // do nothing;
+            // 系统会自动跳转到首页.
         }
     }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-
     }
 
     public static App getInstance() {
         return sInstance;
     }
 
-    @Override
-    public void init(Context appContext) {
+    public void init() {
         try {
             if (mAppInitialize == null) {
                 mAppInitialize = (AppInitialize) Class.forName(CLASS_APP_INITIALIZE).newInstance();

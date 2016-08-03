@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.coofee">
+
+    <uses-sdk tools:overrideLibrary="timber.log" />
 
     <application
         android:name=".App"
@@ -19,6 +22,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <category android:name="android.intent.category.APP_BROWSER" />
@@ -28,9 +33,7 @@
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

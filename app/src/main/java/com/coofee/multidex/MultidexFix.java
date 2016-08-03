@@ -18,6 +18,7 @@ public class MultidexFix {
 
     private static final String KEY_MULTIDEX_INSTALLED = "app.multidex.installed";
 
+    public static final int TYPE_ERROR = -1;
     public static final int TYPE_UNKNOWN = 0;
     public static final int TYPE_INSTALLED = 1;
     public static final int TYPE_INSTALLING = 2;
@@ -55,7 +56,7 @@ public class MultidexFix {
                     if (sInstallStatus == TYPE_UNKNOWN) {
                         try {
                             sInstallStatus = TYPE_INSTALLING;
-                            MultiDex.install(App.getInstance());
+                            installed();
                             setMultidexInstalled();
                             sInstallStatus = TYPE_INSTALLED;
                             subscriber.onNext(sInstallStatus);

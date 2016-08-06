@@ -11,10 +11,12 @@ import com.coofee.App;
 import com.coofee.R;
 import com.coofee.multidex.MultidexFix;
 
+import hugo.weaving.DebugLog;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -29,8 +31,10 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         if (!MultidexFix.isMultidexInstalled()) {
+            Timber.d("Splash: multidex not installed.");
             multidexInstall();
         } else {
+            Timber.d("Splash: multidex installed, show launch fragment.");
             Fragment fragment = Fragment.instantiate(SplashActivity.this, LAUNCH_FRAGMENT);
             showPage(fragment);
         }
@@ -45,6 +49,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
+    @DebugLog
     private void multidexInstall() {
         mMultidexInstallSubscription = MultidexFix.install().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -57,12 +62,14 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         // multidex error;
-                        Toast.makeText(SplashActivity.this, "multidex falied", Toast.LENGTH_LONG).show();
+                        Timber.d(e, "Splash: multidex installed error.");
                     }
 
                     @Override
                     public void onNext(Integer integer) {
                         // multidex installed.
+
+                        Timber.d("Splash: multidex installed, call App.init() and then show launch fragment.");
                         App.getInstance().init();
                         Toast.makeText(SplashActivity.this, "multidex successed.", Toast.LENGTH_LONG).show();
 

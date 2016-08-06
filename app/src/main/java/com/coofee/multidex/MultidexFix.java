@@ -9,6 +9,7 @@ import com.coofee.App;
 
 import rx.Observable;
 import rx.Subscriber;
+import timber.log.Timber;
 
 /**
  * Created by zhaocongying on 16/8/1.
@@ -56,6 +57,7 @@ public class MultidexFix {
                     if (sInstallStatus == TYPE_UNKNOWN) {
                         try {
                             sInstallStatus = TYPE_INSTALLING;
+                            Timber.d("Multidex");
                             installed();
                             setMultidexInstalled();
                             sInstallStatus = TYPE_INSTALLED;

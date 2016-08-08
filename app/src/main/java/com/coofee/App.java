@@ -24,6 +24,9 @@ public class App extends Application {
         super.onCreate();
         sInstance = this;
 
+        // 初始化日志;
+        Timber.plant(new Timber.DebugTree());
+
         if (MultidexFix.isMultidexInstalled()) {
             Timber.d("App: multidex installed, so init.");
             MultidexFix.installed();

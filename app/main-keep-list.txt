@@ -1,8 +1,16 @@
 # multidex must
--keep class com.coofee.splash.SplashActivity {
+-keep class com.coofee.App {
     <init>();
 }
+-keep class com.coofee.splash.SplashActivity { *; }
+-keep class com.coofee.multidex.** { *; }
 
 # must keep contentProvider
 
 # must keep static broadcastReceiver
+
+
+# keep timber log
+-keep class timber.log.** { *; }
+-keep class org.aspectj.** { *; }
+-keep class hugo.** { *; }

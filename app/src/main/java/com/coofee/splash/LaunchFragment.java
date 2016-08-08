@@ -1,6 +1,7 @@
 package com.coofee.splash;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,11 @@ import com.coofee.main.MainActivity;
  */
 public class LaunchFragment extends Fragment {
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -25,14 +31,26 @@ public class LaunchFragment extends Fragment {
         contentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    activity.startActivity(intent);
-                    activity.finish();
-                }
+                startHomeActivity();
             }
         });
+
+
+        contentView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startHomeActivity();
+            }
+        }, 1500L);
         return contentView;
+    }
+
+    private void startHomeActivity() {
+        final Activity activity = getActivity();
+        if (activity != null) {
+            Intent intent = new Intent(activity, MainActivity.class);
+            activity.startActivity(intent);
+            activity.finish();
+        }
     }
 }

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
+apply plugin: 'com.coofee.multidex'
 
 android {
     compileSdkVersion project.compileSdkVersion as int
@@ -81,6 +82,12 @@ android {
 
 }
 
+multidexConfig {
+    minimalMainDex = true
+    maxIdxNumber = 55000
+    additionalParameters = []
+}
+
 //hugo {
 //    enabled true
 //}
@@ -104,4 +111,13 @@ dependencies {
     compile 'com.facebook.fresco:webpsupport:0.12.0'
     compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3'
+    compile 'org.greenrobot:greendao:3.0.1'
+    compile 'com.google.zxing:core:3.0.0'
+    compile 'org.altbeacon:android-beacon-library:+'
+
+    compile 'com.google.guava:guava:19.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'org.nanohttpd:nanohttpd:2.2.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

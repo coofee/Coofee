@@ -2,9 +2,9 @@ package com.coofee.splash;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.coofee.App;
@@ -18,7 +18,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends FragmentActivity {
 
     public static final String LAUNCH_FRAGMENT = "com.coofee.splash.LaunchFragment";
 

@@ -16,7 +16,7 @@ public class MultidexExtension {
             if (maxIdxNumber > 65535) {
                 maxIdxNumber = 65535;
             }
-            parameters += "--set-max-idx-number=${maxIdxxNumber}"
+            parameters += "--set-max-idx-number=${maxIdxNumber}".toString();
         }
         parameters += additionalParameters;
         return parameters;

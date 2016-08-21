@@ -13,8 +13,6 @@ import timber.log.Timber;
  */
 public class App extends Application {
 
-    private static final String CLASS_APP_INITIALIZE = "com.coofee.AppInitializeImpl";
-
     private static App sInstance;
     private AppInitialize mAppInitialize;
 
@@ -52,7 +50,11 @@ public class App extends Application {
         Timber.d("App: try init...");
         try {
             if (mAppInitialize == null) {
-                mAppInitialize = (AppInitialize) Class.forName(CLASS_APP_INITIALIZE).newInstance();
+                // 防止AppInitializeImpl被打入主dex.
+                String fullClassName = new StringBuilder("com.")
+                        .append("coofee.")
+                        .append("AppInitializeImpl").toString();
+                mAppInitialize = (AppInitialize) Class.forName(fullClassName).newInstance();
                 mAppInitialize.init(this);
                 Timber.d("App: inited.");
             }

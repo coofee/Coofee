@@ -1,0 +1,42 @@
+// get collect multidex components task
+def multidexTaskNames = [];
+project.android.applicationVariants.all { variant ->
+    def flavorName = variant.flavorName == null ? "" : variant.flavorName;
+    def buildType = variant.buildType.name == null ? "" : variant.buildType.name;
+    def multidexTaskName = "collect${flavorName.capitalize()}${buildType.capitalize()}MultiDexComponents".toString();
+    multidexTaskNames.add(multidexTaskName);
+}
+
+// 修改manifest_keep文件;
+project.gradle.taskGraph.beforeTask { Task multiDexTask ->
+    if (!multidexTaskNames.contains(multiDexTask.name)) {
+        return;
+    }
+
+    println "multiDexTask=${multiDexTask.name}; multiDexTask.outputFile=${multiDexTask.outputFile}"
+    multiDexTask.doLast {
+        File originKeepFile = multiDexTask.outputFile
+        def tempKeepFile = new File(originKeepFile.parentFile, 'manifest_keep_temp.txt');
+
+        def excludeMainDexs = ["Activity { <init>(); }",
+                               "Service { <init>(); }",
+                               "Receiver { <init>(); }"];
+
+        originKeepFile.eachLine("utf-8") { str, linenumber ->
+            boolean excluded = excludeMainDexs.find { key ->
+                return str.contains(key);
+            }
+
+            if (!excluded) {
+                tempKeepFile.append("${str}\n")
+            }
+        }
+        def result = originKeepFile.delete()
+        println "delele origin multidex manifest_keep=${originKeepFile} successed? ${result}"
+
+        def mainDexKeepFileReader = new File("${project.projectDir}/main-keep-list.txt").newReader('utf-8');
+        tempKeepFile.append(mainDexKeepFileReader);
+        result = tempKeepFile.renameTo(originKeepFile);
+        println "rename ${tempKeepFile} to ${originKeepFile} successed? ${result}"
+    }
+}

@@ -83,6 +83,6 @@ public class SplashActivity extends FragmentActivity {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.splash_container, fragment);
-        ft.commit();
+        ft.commitNowAllowingStateLoss();
     }
 }

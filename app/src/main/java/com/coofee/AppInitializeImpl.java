@@ -2,7 +2,6 @@ package com.coofee;
 
 import android.content.Context;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.coofee.component.Component;
 import com.coofee.component.http.Auth;
 import com.coofee.component.http.HttpUtils;
@@ -11,8 +10,6 @@ import com.coofee.component.http.TokenInterceptor;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.iflytek.msc.MSC;
-import com.umeng.analytics.MobclickAgent;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -35,11 +32,7 @@ public class AppInitializeImpl implements AppInitialize {
     @Override
     public void init(Context appContext) {
         // 初始化日志;
-        // Timber.plant(new Timber.DebugTree());
-
-        SDKInitializer.initialize(appContext);
-
-        MSC.DebugLog(true);
+//        Timber.plant(new Timber.DebugTree());
 
         // 初始化http;
         OkHttpClient httpClient = new OkHttpClient.Builder()
@@ -60,9 +53,5 @@ public class AppInitializeImpl implements AppInitialize {
                 .build();
 
         Component.with(httpClient);
-
-
-        MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(appContext, "0a9s0a9s-a9ssa0s", "sjsksjsksj");
-        MobclickAgent.startWithConfigure(config);
     }
 }

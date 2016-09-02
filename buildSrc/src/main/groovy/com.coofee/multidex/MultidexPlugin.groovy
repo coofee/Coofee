@@ -9,7 +9,6 @@ import com.android.ide.common.process.ProcessException
 import com.android.ide.common.process.ProcessOutputHandler
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.Task
 
 public class MultidexPlugin implements Plugin<Project> {
 
@@ -25,10 +24,14 @@ public class MultidexPlugin implements Plugin<Project> {
             project.tasks.matching {
                 it.name.startsWith('dex')
             }.each { dx ->
-                if (dx.additionalParameters == null) {
-                    dx.additionalParameters = []
+                try {
+                    if (dx.additionalParameters == null) {
+                        dx.additionalParameters = []
+                    }
+                    dx.additionalParameters += multidexConfig.toDxParameters();
+                } catch (Throwable e) {
+                    e.printStackTrace()
                 }
-                dx.additionalParameters += multidexConfig.toDxParameters();
             }
 
             // support transform api; 1.5.0+

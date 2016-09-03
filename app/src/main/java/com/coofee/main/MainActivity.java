@@ -1,5 +1,6 @@
 package com.coofee.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -7,16 +8,43 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.coofee.R;
 import com.coofee.base.BaseActivity;
+import com.coofee.databind.DemoActivity;
+import com.coofee.main.bean.Demo;
+import com.github.markzhai.recyclerview.BaseViewAdapter;
+import com.github.markzhai.recyclerview.BindingViewHolder;
+import com.github.markzhai.recyclerview.SingleTypeAdapter;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private RecyclerView mDemoListView;
+
+    public class DemoPresenter implements SingleTypeAdapter.Presenter<Demo> {
+
+        @Override
+        public void onItemClick(Demo demo) {
+            Toast.makeText(MainActivity.this, demo.title, Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, demo.mActivityClass));
+        }
+    }
+
+    public class DemoDecorator implements BaseViewAdapter.Decorator {
+
+        @Override
+        public void decorator(BindingViewHolder holder, int position, int viewType) {
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +70,16 @@ public class MainActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mDemoListView = (RecyclerView) findViewById(R.id.main_demo_list);
+        mDemoListView.setHasFixedSize(true);
+        mDemoListView.setLayoutManager(new LinearLayoutManager(this));
+
+        SingleTypeAdapter<Demo> demoListAdapter = new SingleTypeAdapter<Demo>(this, R.layout.main_demo_list);
+        demoListAdapter.add(new Demo("data binding", DemoActivity.class));
+        demoListAdapter.setPresenter(new DemoPresenter());
+        demoListAdapter.setDecorator(new DemoDecorator());
+        mDemoListView.setAdapter(demoListAdapter);
     }
 
     @Override

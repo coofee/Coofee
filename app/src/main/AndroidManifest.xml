@@ -34,7 +34,11 @@
             android:name=".test.FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".databind.DemoActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

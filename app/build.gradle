@@ -132,4 +132,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
     //    compile 'org.altbeacon:android-beacon-library:+'
+
+    compile 'com.github.markzhai:databinding-rv-adapter:1.0.1'
 }

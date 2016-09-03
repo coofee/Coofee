@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.coofee.main.bean.Demo" />
+
+        <!-- 注意databinding中内部类也不能使用$，否则编译会出错。 -->
+        <!--<variable-->
+        <!--name="presenter"-->
+        <!--type="com.coofee.main.MainActivity$DemoPresenter" />-->
+        <variable
+            name="presenter"
+            type="com.coofee.main.MainActivity.DemoPresenter" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="@{() -> presenter.onItemClick(item)}"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:text="@{item.title}"
+            android:textAppearance="?android:textAppearanceLarge" />
+
+    </LinearLayout>
+</layout>

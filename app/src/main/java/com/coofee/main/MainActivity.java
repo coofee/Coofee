@@ -1,6 +1,5 @@
 package com.coofee.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -31,10 +30,17 @@ public class MainActivity extends BaseActivity
 
     public class DemoPresenter implements SingleTypeAdapter.Presenter<Demo> {
 
+        private int titleClickCount = 0;
+
         @Override
         public void onItemClick(Demo demo) {
             Toast.makeText(MainActivity.this, demo.title, Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(MainActivity.this, demo.mActivityClass));
+//            startActivity(new Intent(MainActivity.this, demo.mActivityClass));
+            demo.setTitle(demo.getTitle() + "" + (++titleClickCount));
+        }
+
+        public void onIconClick(View view, Demo demo) {
+            Toast.makeText(MainActivity.this, "view type is " + view.getClass() + demo.iconUrl, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -76,7 +82,7 @@ public class MainActivity extends BaseActivity
         mDemoListView.setLayoutManager(new LinearLayoutManager(this));
 
         SingleTypeAdapter<Demo> demoListAdapter = new SingleTypeAdapter<Demo>(this, R.layout.main_demo_list);
-        demoListAdapter.add(new Demo("data binding", DemoActivity.class));
+        demoListAdapter.add(new Demo("data binding", "http://img4.duitang.com/uploads/blog/201306/24/20130624220244_dUA3m.jpeg", DemoActivity.class));
         demoListAdapter.setPresenter(new DemoPresenter());
         demoListAdapter.setDecorator(new DemoDecorator());
         mDemoListView.setAdapter(demoListAdapter);
